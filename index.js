@@ -38,6 +38,7 @@ let todoModel = [
 let addBtn = document.querySelector('#addBtn')
 let newTodoInput = document.querySelector('#newInput')
 let ulItem = document.querySelector('.todoList')
+let newLi = document.createElement("li")
 
 //add event listner to the UL to listen to when the LIs are clicked
 ulItem.addEventListener('click', (event) => {
@@ -59,6 +60,7 @@ function completeTodo(id) {
 }
 
 
+
 function addTodo(todoName) {
     let newTodo = {
         todoName: todoName,
@@ -67,9 +69,11 @@ function addTodo(todoName) {
         todoDailyReminder: false,
     }
     todoModel.push(newTodo)
+    ulItem.append(newLi)
     displayTodos(todoModel)
 
 }
+
 
 addBtn.addEventListener('click', event => {
     let todoName = newTodoInput.value
@@ -78,6 +82,7 @@ addBtn.addEventListener('click', event => {
     addTodo(todoName)
     displayTodos(todoModel)
     newTodoInput.value = ""
+
 })
 
 
@@ -112,12 +117,16 @@ function displayTodos(todoModel) {
             ${todo.todoName}
             <span> <i class="fa fa-trash"></i></span>
         </li>`
+        // ${todo.todoDate}
+
 
         // look up insertAdjacentHTML
         //Place the markup in the HTML
         ulItem.insertAdjacentHTML('beforeend', liMarkup)
+        newLi.insertAdjacentHTML('beforeend', liMarkup)
 
 
+// did it download?
     })
 }
 

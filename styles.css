@@ -2,10 +2,10 @@
 
 :root {
   --main-blue: skyblue;
-  --main-green: black;
+  --main-background: black;
   --main-grey: #f2f2f2;
   --main-red: #e74c3c;
-  --main-white: #fff;
+  --main-todoList-Background: #FFD580;
   --sub-blue: #86c6f4;
   --sub-grey: #ccc;
 }
@@ -20,7 +20,7 @@
 body {
   height: 100vh;
   width: 100%;
-  background: var(--main-green);
+  background: var(--main-background);
 }
 
 button {
@@ -40,8 +40,8 @@ body div div button.imageIcon {
   margin: 120px auto;
   max-width: 400px;
   width: 100%;
-  border-radius: 5px;
-  background: var(--main-white);
+  border-radius: 40px;
+  background: var(--main-todoList-Background);
   padding: 25px;
 }
 
