@@ -42,21 +42,32 @@ let newLi = document.createElement("li")
 
 //add event listner to the UL to listen to when the LIs are clicked
 ulItem.addEventListener('click', (event) => {
-    console.log(event.target.dataset.todoid)
-    let todoIds = event.target.dataset.todoid
-    completeTodo(todoIds)
 
 
-    //edit the todo in the data model
-    // todoModel[<index from above.].todostatus = true
+    //check to see what element the user is clicking on
+    if(event.target.tagName === 'LI'){
+        //if user is clicking on the LI complete the todo
+        console.log(event.target.dataset.todoid)
+        let todoIds = event.target.dataset.todoid
+        completeTodo(todoIds)
 
-    displayTodos(todoModel)
 
+        //edit the todo in the data model
+        // todoModel[<index from above.].todostatus = true
+
+        displayTodos(todoModel)
+    } else if(event.target.tagName === 'I') {
+        //call delete function
+        console.log(event.target.dataset.todoid)
+        let todoIdDeletion = event.target.dataset.todoid
+        deleteTodoItem(todoIdDeletion)
+    }
+    
 })
 
 function completeTodo(id) {
     let todoIdx = todoModel.findIndex(todo => todo.todoId == id)
-    todoModel[todoIdx].todoStatus = !todoModel[todoIdx].todoStatus
+    todoModel[todoIdx].todoStatus = ! todoModel[todoIdx].todoStatus
 }
 
 
@@ -82,13 +93,36 @@ addBtn.addEventListener('click', event => {
     addTodo(todoName)
     displayTodos(todoModel)
     newTodoInput.value = ""
-
 })
 
 
 
 // click on edit button
-let editBtn = document.querySelector(".editBtn")
+function editBtn() {
+    let editTodoList = document.querySelector(".editBtn")
+
+    editTodoList.addEventListener("dblclick", editItem)
+    editTodoList.textContent = input.value
+
+    let item = event.target.innerHTML;
+
+    let itemInput = document.createElement("input")
+    itemInput.type = "text"
+    itemInput = item;
+    
+}
+
+function deleteTodoItem(id) {
+
+    const todoIdX = todoModel.findIndex(todo => todo.todoId === id)
+    todoModel.splice(todoIdX)
+    displayTodos(todoModel)
+
+}
+   
+
+
+
 
 
 // figure out how to get current todos to show up underneath
@@ -96,6 +130,7 @@ let editBtn = document.querySelector(".editBtn")
 //create a function that will add todos to the UL element in the HTML
 function displayTodos(todoModel) {
 
+    //clear out the html that is already there so we can replace it
     ulItem.innerHTML = ""
 
 
@@ -116,6 +151,7 @@ function displayTodos(todoModel) {
              data-todoId ='${todo.todoId}'>
             ${todo.todoName}
             <span> <i class="fa fa-trash"></i></span>
+            <span class="editBtn"><i class="fa fa-edit"></i></span>
         </li>`
         // ${todo.todoDate}
 
@@ -126,8 +162,10 @@ function displayTodos(todoModel) {
         newLi.insertAdjacentHTML('beforeend', liMarkup)
 
 
-// did it download?
     })
+
+    let pendingTask = document.querySelector("#pendingTask")
+    pendingTask.innerHTML = todoModel.filter(todo => todo.todoStatus === false).length
 }
 
 displayTodos(todoModel)

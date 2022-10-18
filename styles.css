@@ -28,7 +28,7 @@ button {
   border: none;
   border-radius: 10px;
   outline: none;
-  background: skyblue;
+  background: orange;
   cursor: pointer;
 }
 
@@ -99,31 +99,35 @@ body div div button.imageIcon {
 
 .todoList li span {
   position: absolute;
-  right: -45px;
-  width: 45px;
+  right: -80px;
+  width: 70px;
   color: var(--main-white);
-  text-align: center;
+  text-align: left;
   background: var(--main-red);
   border-radius: 0 3px 3px 0;
   cursor: pointer;
   transition: all 0.3s ease;
+  padding-left: 5px;
 }
 
 .todoList li span.editBtn {
   position: absolute;
-  right: -45px;
-  width: 45px;
+  right: -50px;
+  width: 35px;
   color: var(--main-white);
-  text-align: center;
-  background: var(--yellow);
-
+  text-align: right;
+  background: var(--main-blue);
+  border-radius: 0 3px 3px 0;
+  padding-right: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.10s ease;
 }
 
 .todoList li:hover span {
   right: 0;
 }
+
+
 
 .wrapper .footer {
   /*   width: 100%; */
