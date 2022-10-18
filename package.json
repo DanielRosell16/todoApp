@@ -8,5 +8,17 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielRosell16/todoApp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DanielRosell16/todoApp/issues"
+  },
+  "homepage": "https://github.com/DanielRosell16/todoApp#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "underscore": "^1.13.6"
+  }
 }

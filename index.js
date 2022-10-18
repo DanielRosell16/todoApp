@@ -1,3 +1,16 @@
+const express = require('express')
+const app = express()
+const port = 8000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
+
 
 let todoModel = [
     {
@@ -120,6 +133,16 @@ function deleteTodoItem(id) {
 
 }
    
+let deleteBtn = document.querySelector("#deleteBtn")
+
+
+deleteBtn.addEventListener("click", event => {
+    if(event.target.todoStatus === false)
+    return alert("Are you sure that you want to delete this uncompleted task?")
+    deleteTodoItem(todo)
+    displayTodos(todoModel)
+
+})
 
 
 
