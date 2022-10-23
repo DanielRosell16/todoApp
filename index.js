@@ -1,35 +1,35 @@
 
-const express = require('express')
-const app = express()
-const port = 8000
+// const express = require('express')
+// const app = express()
+// const port = 8000
 
-app.use(express.static('client'))
+// app.use(express.static('client'))
 
-app.get('/todoModel', (req, res) => {
-  res.send(todoModel)
-  console.log(req)
-})
+// app.get('/todoModel', (req, res) => {
+//   res.send(todoModel)
+//   console.log(req)
+// })
 
-app.post('/todoModel', (req, res) => {
-    console.log(req)
-    todoModel.push({
-        todoName: req.query.todoName,
-        todoStatus: false,
-        todoId: todoModel.todoId + 1,
-        todoCategory: "School",
-        todoDate: "09/09/22",
-        todoDailyReminder: false,
-    })
-    res.send(todoModel)
-  })
+// app.post('/todoModel', (req, res) => {
+//     console.log(req)
+//     todoModel.push({
+//         todoName: req.query.todoName,
+//         todoStatus: false,
+//         todoId: todoModel.todoId + 1,
+//         todoCategory: "School",
+//         todoDate: "09/09/22",
+//         todoDailyReminder: false,
+//     })
+//     res.send(todoModel)
+//   })
 
-  app.put('/todoModel', (req, res) => {
-    res.send(todoModel)
-  })
+//   app.put('/todoModel', (req, res) => {
+//     res.send(todoModel)
+//   })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`)
+// })
 
 let todoModel = [
     {
@@ -92,7 +92,7 @@ ulItem.addEventListener('click', (event) => {
         //call delete function
         console.log(event.target.dataset.todoid)
         let todoIdDeletion = event.target.dataset.todoid
-        deleteTodoItem(todoIdDeletion)
+        // deleteTodoItem(todoIdDeletion)
     }
     
 })
@@ -147,24 +147,31 @@ function editBtn() {
 function deleteTodoItem(id) {
 
     const todoIdX = todoModel.findIndex(todo => todo.todoId === id)
-    todoModel.splice(todoIdX)
+    todoModel.splice(todoIdX, 1)
     displayTodos(todoModel)
 
 }
    
-let deleteBtn = document.querySelector("#deleteBtn")
-
-
-deleteBtn.addEventListener("click", event => {
-    if(event.target.todoStatus === false)
-    return alert("Are you sure that you want to delete this uncompleted task?")
-    deleteTodoItem(todo)
-    displayTodos(todoModel)
-
-})
 
 
 
+
+function clearCompletedTodos() {
+    let clearBtn = document.querySelector(".clearBtn")
+    clearBtn.addEventListener("click", event => {
+        console.log("Clear btn clicked")
+        if(todoModel.todoStatus === true) {
+            todoModel.todoStatus === 'none'
+        }
+        else {
+            todoModel.todoStatus === 'block'
+        }
+        
+    })
+
+}
+
+clearCompletedTodos()
 
 
 // figure out how to get current todos to show up underneath
@@ -192,7 +199,7 @@ function displayTodos(todoModel) {
         let liMarkup = `<li class='${done}' 
              data-todoId ='${todo.todoId}'>
             ${todo.todoName}
-            <span> <i class="fa fa-trash"></i></span>
+            <span class="deleteBtn"> <i class="fa fa-trash"></i></span>
             <span class="editBtn"><i class="fa fa-edit"></i></span>
         </li>`
         // ${todo.todoDate}
@@ -203,6 +210,20 @@ function displayTodos(todoModel) {
         ulItem.insertAdjacentHTML('beforeend', liMarkup)
         newLi.insertAdjacentHTML('beforeend', liMarkup)
 
+
+        let deleteBtn = document.querySelector(`li[data-todoId='${todo.todoId}'] .deleteBtn`)
+
+        deleteBtn.addEventListener("click", event => {
+            console.log(deleteBtn)
+            if(event.target.todoStatus === false) {
+               return alert("Are you sure that you want to delete this uncompleted task?")
+            }
+            else {
+                
+            }
+            deleteTodoItem(todo.todoId)
+
+        })
 
     })
 
