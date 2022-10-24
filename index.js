@@ -67,7 +67,6 @@ let todoModel = [
 ]
 
 //global values
-let addBtn = document.querySelector('#addBtn')
 let newTodoInput = document.querySelector('#newInput')
 let ulItem = document.querySelector('.todoList')
 let newLi = document.createElement("li")
@@ -117,6 +116,7 @@ function addTodo(todoName) {
 
 }
 
+let addBtn = document.querySelector('#addBtn')
 
 addBtn.addEventListener('click', event => {
     let todoName = newTodoInput.value
@@ -129,32 +129,20 @@ addBtn.addEventListener('click', event => {
 
 
 
-// click on edit button
-function editBtn() {
-    let editTodoList = document.querySelector(".editBtn")
 
-    editTodoList.addEventListener("dblclick", editItem)
-    editTodoList.textContent = input.value
-
-    let item = event.target.innerHTML;
-
-    let itemInput = document.createElement("input")
-    itemInput.type = "text"
-    itemInput = item;
-    
-}
 
 function deleteTodoItem(id) {
 
     const todoIdX = todoModel.findIndex(todo => todo.todoId === id)
     todoModel.splice(todoIdX, 1)
     displayTodos(todoModel)
-
 }
    
+function editBtn() {
 
-
-
+   
+            
+ }
 
 function clearCompletedTodos() {
     let clearBtn = document.querySelector(".clearBtn")
@@ -218,13 +206,37 @@ function displayTodos(todoModel) {
             if(event.target.todoStatus === false) {
                return alert("Are you sure that you want to delete this uncompleted task?")
             }
-            else {
-                
+            else {        
             }
             deleteTodoItem(todo.todoId)
+        }) //end of deleteBtn
 
-        })
+        // click on edit button
+        let editTodoList = document.querySelector(`li[data-todoId='${todo.todoId}'] .editBtn`)
 
+        editTodoList.addEventListener("click", event => {
+            console.log("I clicked the edit button!")
+            let newInputField = document.querySelector(".inputField")
+            
+            let todoName = newTodoInput.value
+     
+            editBtn(todoName)
+            displayTodos(todoModel)
+            newTodoInput.value = ""
+
+            // let item = event.target.innerHTML;
+
+            // let itemInput = document.createElement("input")
+            // itemInput.type = "text"
+            // itemInput = item;
+
+            // todo.todoName.textContent = todo.todoName.value
+
+            })
+            
+
+
+   
     })
 
     let pendingTask = document.querySelector("#pendingTask")
