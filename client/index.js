@@ -1,36 +1,4 @@
 
-// const express = require('express')
-// const app = express()
-// const port = 8000
-
-// app.use(express.static('client'))
-
-// app.get('/todoModel', (req, res) => {
-//   res.send(todoModel)
-//   console.log(req)
-// })
-
-// app.post('/todoModel', (req, res) => {
-//     console.log(req)
-//     todoModel.push({
-//         todoName: req.query.todoName,
-//         todoStatus: false,
-//         todoId: todoModel.todoId + 1,
-//         todoCategory: "School",
-//         todoDate: "09/09/22",
-//         todoDailyReminder: false,
-//     })
-//     res.send(todoModel)
-//   })
-
-//   app.put('/todoModel', (req, res) => {
-//     res.send(todoModel)
-//   })
-
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`)
-// })
-
 let todoModel = [
     {
         todoName: "Work in Todo App",
@@ -60,11 +28,21 @@ let todoModel = [
         todoName: "Look Up insertAdjacentHTML",
         todoStatus: true,
         todoId: 3,
-        todoCategory: "Future Use",
+        todoCategoryId: 0,
         todoDate: "09/18/22",
         todoDailyReminder: false,
     }
 ]
+
+let catigories = [
+    {
+        catName: 'work',
+        id: 0
+    }
+]
+
+let editing = false;
+let editId = 0;
 
 //global values
 let newTodoInput = document.querySelector('#newInput')
@@ -91,7 +69,6 @@ ulItem.addEventListener('click', (event) => {
         //call delete function
         console.log(event.target.dataset.todoid)
         let todoIdDeletion = event.target.dataset.todoid
-        // deleteTodoItem(todoIdDeletion)
     }
     
 })
@@ -119,11 +96,25 @@ function addTodo(todoName) {
 let addBtn = document.querySelector('#addBtn')
 
 addBtn.addEventListener('click', event => {
+
     let todoName = newTodoInput.value
     if(todoName === "")
     return alert("You need to add a task")
-    addTodo(todoName)
-    displayTodos(todoModel)
+    if(!editing){
+        addTodo(todoName)
+        displayTodos(todoModel)
+    }
+
+    if(editing) {
+        console.log('editing')
+
+        const todoIDX = todoModel.findIndex(todo => todo.todoId == editId)
+
+        todoModel[todoIDX].todoName = todoName
+
+        displayTodos(todoModel)
+    }
+    
     newTodoInput.value = ""
 })
 
@@ -139,7 +130,7 @@ function deleteTodoItem(id) {
 }
    
 function editBtn() {
-
+    
    
             
  }
@@ -148,14 +139,18 @@ function clearCompletedTodos() {
     let clearBtn = document.querySelector(".clearBtn")
     clearBtn.addEventListener("click", event => {
         console.log("Clear btn clicked")
-        if(todoModel.todoStatus === true) {
-            todoModel.todoStatus === 'none'
+
+        const todoIdX = todoModel.findIndex(todo => todo.todoStatus === true)
+        todoModel.splice(todoIdX, 1)
+
+        deleteTodoItem(todoModel.todoStatus === true)
+
+        if(todoModel.todoStatus === false) {
+            alert("You have no completed tasks")
         }
-        else {
-            todoModel.todoStatus === 'block'
-        }
-        
     })
+    displayTodos(todoModel)
+
 
 }
 
@@ -216,21 +211,27 @@ function displayTodos(todoModel) {
 
         editTodoList.addEventListener("click", event => {
             console.log("I clicked the edit button!")
-            let newInputField = document.querySelector(".inputField")
+
+            if(todoModel.todoStatus === true){
+                alert("Are you sure you want to edit this completed item?")
+            }
+
+
+            //put the value in the box
+
+            newTodoInput.value = todo.todoName;
+            //set a var to know we are editing
+
+            console.log(todo.todoId)
+            editing = true;
+            editId = todo.todoId;
+
+            //if editing save to the correct object in the array (the todo we are editing)
+
+
             
-            let todoName = newTodoInput.value
-     
-            editBtn(todoName)
-            displayTodos(todoModel)
-            newTodoInput.value = ""
+            // fix the add new code - if edit is true, don't add new
 
-            // let item = event.target.innerHTML;
-
-            // let itemInput = document.createElement("input")
-            // itemInput.type = "text"
-            // itemInput = item;
-
-            // todo.todoName.textContent = todo.todoName.value
 
             })
             
