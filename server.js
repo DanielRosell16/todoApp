@@ -5,7 +5,7 @@ const port = 8000
 
 app.use(express.static('client'))
 
-app.get('/todoModel', (req, res) => {
+app.get('./client/index.js', (req, res) => {
   res.send(todoModel)
   console.log(req)
 })
