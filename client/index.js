@@ -34,12 +34,55 @@ let todoModel = [
     }
 ]
 
-let catigories = [
+let categories = [
     {
         catName: 'work',
         id: 0
     }
 ]
+
+
+// // Category Section
+let newCatInput = document.querySelector("#newCatInput")
+function addCat(catName) {
+    let newCat = {
+        catName: catName,
+        id: 0,
+        catStatus: false,
+    }
+    todoModel.push(newCat)
+    ulItem.append(newLi)
+    displayTodos(todoModel)
+}
+
+let addCatBtn = document.querySelector('#addCatBtn')
+
+addCatBtn.addEventListener('click', event => {
+
+    console.log("Cat add btn clicked")
+
+    let catName = newCatInput.value
+    // if(catName === "")
+    // return alert("You need to add a Category")
+    // if(!editing){
+    //     addTodo(todoName)
+    //     displayTodos(todoModel)
+    // }
+
+    // if(editing) {
+    //     console.log('editing')
+
+    //     const todoIDX = todoModel.findIndex(todo => todo.todoId == editId)
+
+    //     todoModel[todoIDX].todoName = todoName
+
+    //     displayTodos(todoModel)
+    // }
+    displayTodos(todoModel)
+
+    newCatInput.value = ""
+})
+
 
 let editing = false;
 let editId = 0;
@@ -90,7 +133,6 @@ function addTodo(todoName) {
     todoModel.push(newTodo)
     ulItem.append(newLi)
     displayTodos(todoModel)
-
 }
 
 let addBtn = document.querySelector('#addBtn')
@@ -234,14 +276,90 @@ function displayTodos(todoModel) {
 
 
             })
-            
+ 
+    }) //end of todoModel
 
 
-   
-    })
 
-    let pendingTask = document.querySelector("#pendingTask")
-    pendingTask.innerHTML = todoModel.filter(todo => todo.todoStatus === false).length
-}
+} //end of displayTodos func
 
 displayTodos(todoModel)
+
+
+function displayCat(categories) {
+
+
+    categories.forEach(category => {
+
+        //for the css, check to see if the todo is done. If it is, place the string 'done' into the done var,
+        // if it isn't, empty string
+        let done = category.catStatus ? "done" : "";
+    
+        //add a data attribute to each li, containing the id of the todo.
+        // https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
+        let liMarkup = `<li class='${done}' 
+             data-todoId ='${category.id}'>
+            ${category.catName}
+            <span class="deleteBtn"> <i class="fa fa-trash"></i></span>
+            <span class="editBtn"><i class="fa fa-edit"></i></span>
+        </li>`
+        // ${todo.todoDate}
+    
+    
+    //     ulItem.insertAdjacentHTML('beforeend', liMarkup)
+    //     newLi.insertAdjacentHTML('beforeend', liMarkup)
+    
+    
+    //     let deleteBtn = document.querySelector(`li[data-todoId='${todo.todoId}'] .deleteBtn`)
+    
+    //     deleteBtn.addEventListener("click", event => {
+    //         console.log(deleteBtn)
+    //         if(event.target.todoStatus === false) {
+    //            return alert("Are you sure that you want to delete this uncompleted task?")
+    //         }
+    //         else {        
+    //         }
+    //         deleteTodoItem(todo.todoId)
+    //     }) //end of deleteBtn
+    
+    //     // click on edit button
+    //     let editTodoList = document.querySelector(`li[data-todoId='${todo.todoId}'] .editBtn`)
+    
+    //     editTodoList.addEventListener("click", event => {
+    //         console.log("I clicked the edit button!")
+    
+    //         if(todoModel.todoStatus === true){
+    //             alert("Are you sure you want to edit this completed item?")
+    //         }
+    
+    
+    //         //put the value in the box
+    
+    //         newTodoInput.value = todo.todoName;
+    //         //set a var to know we are editing
+    
+    //         console.log(todo.todoId)
+    //         editing = true;
+    //         editId = todo.todoId;
+    
+    //         //if editing save to the correct object in the array (the todo we are editing)
+    
+    
+            
+    //         // fix the add new code - if edit is true, don't add new
+    
+    
+    //         })
+    
+    // })
+    
+    let pendingTask = document.querySelector("#pendingTask")
+    pendingTask.innerHTML = categories.filter(category => category.catStatus === false).length
+    })
+
+
+} //end of displayCat
+
+
+
+displayCat(categories)
